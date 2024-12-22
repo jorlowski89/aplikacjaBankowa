@@ -1,0 +1,32 @@
+# Ignoruj foldery i pliki generowane w projekcie C#
+Aplikacja_Bankowa/bin/
+Aplikacja_Bankowa/obj/
+Aplikacja_Bankowa/.vs/
+Aplikacja_Bankowa/.vscode/
+Aplikacja_Bankowa/TestResults/
+
+# Ignoruj pliki zależności i cache
+Aplikacja_Bankowa/*.nupkg
+Aplikacja_Bankowa/packages/
+Aplikacja_Bankowa/project.lock.json
+Aplikacja_Bankowa/project.assets.json
+
+# Ignoruj pliki konfiguracji IDE
+Aplikacja_Bankowa/*.suo
+Aplikacja_Bankowa/*.user
+Aplikacja_Bankowa/*.userosscache
+Aplikacja_Bankowa/*.ide
+
+# Ignoruj pliki logów
+Aplikacja_Bankowa/*.log
+
+# Ignoruj pliki konfiguracyjne z danymi lokalnymi lub poufnymi
+Aplikacja_Bankowa/appsettings.json
+Aplikacja_Bankowa/secrets.json
+
+# Ignoruj systemowe i tymczasowe pliki
+.DS_Store
+Thumbs.db
+
+# Ignoruj wszystko w folderze nuget global-packages, jeżli używany
+Aplikacja_Bankowa/.nuget/
