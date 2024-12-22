@@ -1,13 +1,6 @@
--- USUWANIE BAZY
-USE master;
-GO
--- Ustaw bazê w tryb single-user
-ALTER DATABASE BankApplication SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-GO
--- Usuñ bazê danych
-DROP DATABASE BankApplication;
-GO
-
+/*
+Kwerendy do TWORZENIA BAZY!
+*/
 
 CREATE DATABASE BankApplication;
 GO
@@ -59,7 +52,7 @@ CREATE TABLE Accounts (
     AccountNumber NVARCHAR(20) NOT NULL UNIQUE,								-- Unikalny numer konta
     UserID UNIQUEIDENTIFIER NOT NULL,										-- Powi¹zanie z u¿ytkownikiem (klucz obcy)
     AccountBalance BIGINT DEFAULT 0 NOT NULL, 								-- Saldo konta
-    Currency NVARCHAR(3) NOT NULL,											-- Waluta konta (np. PLN, USD)
+    Currency NVARCHAR(3) DEFAULT 'PLN' NOT NULL,											-- Waluta konta (np. PLN, USD)
     FOREIGN KEY (UserID) REFERENCES Users(UserID)							-- Klucz obcy do tabeli Users
 );
 GO
@@ -81,8 +74,8 @@ CREATE TABLE Transfers (
     TransferID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,				-- Automatyczny UUID
     Amount BIGINT NOT NULL,													-- Kwota transferu
     TransferTitle NVARCHAR(255) NOT NULL,									-- Tytu³ przelewu
-    SenderAccountID UNIQUEIDENTIFIER NOT NULL,								-- UUID konta nadawcy
-    RecipientAccountID UNIQUEIDENTIFIER NOT NULL,							-- UUID konta odbiorcy
+    SenderAccountID UNIQUEIDENTIFIER NULL,								-- UUID konta nadawcy
+    RecipientAccountID UNIQUEIDENTIFIER NULL,							-- UUID konta odbiorcy
     SendingDate DATETIME DEFAULT GETUTCDATE() NULL,							-- Data wys³ania transferu
     PostingDate DATETIME NULL,												-- Data ksiêgowania transferu
     TransferTypeID UNIQUEIDENTIFIER NOT NULL,								-- Typ transferu (klucz obcy)
