@@ -28,5 +28,15 @@ namespace Aplikacja_Bankowa
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bankomat_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
