@@ -10,7 +10,7 @@ namespace Aplikacja_Bankowa.Services
         public DatabaseConnection()
         {
             // Connection string z uwierzytelnianiem Windows
-            connectionString = @"Server=serwerek\SQLEXPRESS;Database=BankApplication;Trusted_Connection=True;";
+            connectionString = @"Server=.\SQLEXPRESS;Database=BankApplication;Trusted_Connection=True;";
         }
 
         public SqlConnection GetConnection()
