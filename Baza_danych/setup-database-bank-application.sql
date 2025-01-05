@@ -17,6 +17,16 @@ CREATE TABLE Users (
 );
 GO
 
+CREATE TABLE LoggedInUsers (
+    LoggedInUserID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,			-- Unikalne ID w tabeli
+    Username       NVARCHAR(50) NOT NULL UNIQUE,							-- Nazwa u¿ytkownika
+    IsLoggedIn     BIT NOT NULL DEFAULT 0,									-- Czy zalogowany (0 = nie, 1 = tak)
+    LoggedAt       DATETIME NOT NULL DEFAULT GETUTCDATE(),					-- Data/czas ostatniej zmiany stanu
+    CONSTRAINT FK_LoggedInUsers_Users
+        FOREIGN KEY (Username) REFERENCES Users(Username)					-- Powi¹zanie z tabel¹ Users po nazwie
+);
+GO
+
 INSERT INTO Users (Username, PasswordHash, IsActive)
 VALUES (
     'admin',
