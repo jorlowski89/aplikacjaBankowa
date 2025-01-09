@@ -11,34 +11,16 @@ using Aplikacja_Bankowa.Services;
 
 namespace Aplikacja_Bankowa
 {
-    public partial class HomePage : Form
+    public partial class Przelewy : Form
     {
         private readonly DatabaseConnection dbConnection;
-        public HomePage(DatabaseConnection dbConnection)
+        public Przelewy(DatabaseConnection dbConnection)
         {
             InitializeComponent();
-
-            this.Text = "Strona Domowa";
+            this.Text = "Przelewy";
 
             // Przypisanie przekazanego połączenia do pola klasy
             this.dbConnection = dbConnection;
-        }
-
-        private void HomePage_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void bankomat_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void przelewy_Click(object sender, EventArgs e)
-        {
-            Przelewy przelewyPage = new Przelewy(dbConnection);
-            przelewyPage.Show();
-            this.Hide();
         }
     }
 }

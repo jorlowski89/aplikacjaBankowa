@@ -80,7 +80,7 @@
             this.przelewy.TabIndex = 4;
             this.przelewy.Text = "NOWY PRZELEW";
             this.przelewy.UseVisualStyleBackColor = true;
-            this.przelewy.Click += new System.EventHandler(this.button2_Click);
+            this.przelewy.Click += new System.EventHandler(this.przelewy_Click);
             // 
             // historia
             // 
