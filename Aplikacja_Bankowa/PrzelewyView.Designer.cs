@@ -1,6 +1,6 @@
 ﻿namespace Aplikacja_Bankowa
 {
-    partial class Przelewy
+    partial class PrzelewyView
     {
         /// <summary>
         /// Required designer variable.

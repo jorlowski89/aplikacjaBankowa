@@ -36,7 +36,7 @@ namespace Aplikacja_Bankowa
 
         private void przelewy_Click(object sender, EventArgs e)
         {
-            Przelewy przelewyPage = new Przelewy(dbConnection);
+            PrzelewyView przelewyPage = new PrzelewyView(dbConnection);
             przelewyPage.Show();
             this.Hide();
         }

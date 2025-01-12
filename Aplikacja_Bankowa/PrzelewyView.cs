@@ -11,10 +11,10 @@ using Aplikacja_Bankowa.Services;
 
 namespace Aplikacja_Bankowa
 {
-    public partial class Przelewy : Form
+    public partial class PrzelewyView : Form
     {
         private readonly DatabaseConnection dbConnection;
-        public Przelewy(DatabaseConnection dbConnection)
+        public PrzelewyView(DatabaseConnection dbConnection)
         {
             InitializeComponent();
             this.Text = "Przelewy";

@@ -60,11 +60,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Przelewy.cs">
+    <Compile Include="PrzelewyView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Przelewy.Designer.cs">
-      <DependentUpon>Przelewy.cs</DependentUpon>
+    <Compile Include="PrzelewyView.Designer.cs">
+      <DependentUpon>PrzelewyView.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\DatabaseConnection.cs" />
     <EmbeddedResource Include="HomePage.resx">
@@ -82,8 +82,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Przelewy.resx">
-      <DependentUpon>Przelewy.cs</DependentUpon>
+    <EmbeddedResource Include="PrzelewyView.resx">
+      <DependentUpon>PrzelewyView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
