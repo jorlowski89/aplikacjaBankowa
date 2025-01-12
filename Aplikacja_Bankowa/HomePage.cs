@@ -13,7 +13,9 @@ namespace Aplikacja_Bankowa
 {
     public partial class HomePage : Form
     {
+        private Bankomat bankomat;
         private readonly DatabaseConnection dbConnection;
+
         public HomePage(DatabaseConnection dbConnection)
         {
             InitializeComponent();
@@ -22,16 +24,25 @@ namespace Aplikacja_Bankowa
 
             // Przypisanie przekazanego połączenia do pola klasy
             this.dbConnection = dbConnection;
+            bankomat = new Bankomat(10);
+            UpdateBalanceLabel();
         }
 
         private void HomePage_Load(object sender, EventArgs e)
         {
 
         }
+        private void UpdateBalanceLabel()
+        {
+            saldoKonta.Text = $"{bankomat.GetBalance():C}";
+        }
+
 
         private void bankomat_Click(object sender, EventArgs e)
         {
-
+            BankomatView bankomatView = new BankomatView(dbConnection);
+            bankomatView.Show();
+            this.Hide();
         }
 
         private void przelewy_Click(object sender, EventArgs e)

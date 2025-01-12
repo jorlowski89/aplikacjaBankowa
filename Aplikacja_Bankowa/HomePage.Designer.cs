@@ -29,7 +29,7 @@
             this.saldoKonta = new System.Windows.Forms.Label();
             this.przelewy = new System.Windows.Forms.Button();
             this.historia = new System.Windows.Forms.Button();
-            this.bankomat = new System.Windows.Forms.Button();
+            this.bankomatBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -92,20 +92,20 @@
             this.historia.Text = "HISTORIA";
             this.historia.UseVisualStyleBackColor = true;
             // 
-            // bankomat
+            // bankomatBtn
             // 
-            this.bankomat.Location = new System.Drawing.Point(488, 14);
-            this.bankomat.Name = "bankomat";
-            this.bankomat.Size = new System.Drawing.Size(138, 38);
-            this.bankomat.TabIndex = 6;
-            this.bankomat.Text = "BANKOMAT";
-            this.bankomat.UseVisualStyleBackColor = true;
-            this.bankomat.Click += new System.EventHandler(this.bankomat_Click);
+            this.bankomatBtn.Location = new System.Drawing.Point(488, 14);
+            this.bankomatBtn.Name = "bankomatBtn";
+            this.bankomatBtn.Size = new System.Drawing.Size(138, 38);
+            this.bankomatBtn.TabIndex = 6;
+            this.bankomatBtn.Text = "BANKOMAT";
+            this.bankomatBtn.UseVisualStyleBackColor = true;
+            this.bankomatBtn.Click += new System.EventHandler(this.bankomat_Click);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.przelewy);
-            this.panel1.Controls.Add(this.bankomat);
+            this.panel1.Controls.Add(this.bankomatBtn);
             this.panel1.Controls.Add(this.historia);
             this.panel1.Location = new System.Drawing.Point(28, 358);
             this.panel1.Name = "panel1";
@@ -140,7 +140,7 @@
         private System.Windows.Forms.Label saldoKonta;
         private System.Windows.Forms.Button przelewy;
         private System.Windows.Forms.Button historia;
-        private System.Windows.Forms.Button bankomat;
+        private System.Windows.Forms.Button bankomatBtn;
         private System.Windows.Forms.Panel panel1;
     }
 }

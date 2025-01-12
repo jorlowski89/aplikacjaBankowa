@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BankomatView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BankomatView.Designer.cs">
+      <DependentUpon>BankomatView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
       <DependentUpon>PrzelewyView.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\DatabaseConnection.cs" />
+    <EmbeddedResource Include="BankomatView.resx">
+      <DependentUpon>BankomatView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>

@@ -10,7 +10,7 @@ namespace Aplikacja_Bankowa
     {
         private decimal balance;
 
-        public Bankomat( decimal initialBalance)
+        public Bankomat(decimal initialBalance)
         {
             this.balance = initialBalance;
         }
