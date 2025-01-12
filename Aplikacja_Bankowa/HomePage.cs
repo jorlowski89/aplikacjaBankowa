@@ -40,5 +40,12 @@ namespace Aplikacja_Bankowa
             przelewyPage.Show();
             this.Hide();
         }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            Login login = new Login(dbConnection);
+            login.Show();
+            this.Hide();
+        }
     }
 }

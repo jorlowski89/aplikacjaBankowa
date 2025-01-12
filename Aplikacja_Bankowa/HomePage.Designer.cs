@@ -24,7 +24,7 @@
         private void InitializeComponent()
         {
             this.userName = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.logout = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.saldoKonta = new System.Windows.Forms.Label();
             this.przelewy = new System.Windows.Forms.Button();
@@ -43,14 +43,15 @@
             this.userName.TabIndex = 0;
             this.userName.Text = "User";
             // 
-            // button1
+            // logout
             // 
-            this.button1.Location = new System.Drawing.Point(611, 14);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Wyloguj";
-            this.button1.UseVisualStyleBackColor = true;
+            this.logout.Location = new System.Drawing.Point(611, 14);
+            this.logout.Name = "logout";
+            this.logout.Size = new System.Drawing.Size(75, 23);
+            this.logout.TabIndex = 1;
+            this.logout.Text = "Wyloguj";
+            this.logout.UseVisualStyleBackColor = true;
+            this.logout.Click += new System.EventHandler(this.logout_Click);
             // 
             // label2
             // 
@@ -119,7 +120,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.saldoKonta);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.logout);
             this.Controls.Add(this.userName);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "HomePage";
@@ -134,7 +135,7 @@
         #endregion
 
         private System.Windows.Forms.Label userName;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button logout;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label saldoKonta;
         private System.Windows.Forms.Button przelewy;
