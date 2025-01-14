@@ -65,9 +65,9 @@ namespace Aplikacja_Bankowa
                 try
                 {
                     connection.Open();
-
+                    var query = $"SELECT COUNT(1) FROM Users WHERE Username = '{username}' AND PasswordHash = HASHBYTES('SHA2_256', '{password}')";
                     // Bezpieczne zapytanie z użyciem parametrów SQL
-                    var query = "SELECT COUNT(1) FROM Users WHERE Username = @Username AND PasswordHash = HASHBYTES('SHA2_256', @Password)";
+                    //var query = $"SELECT COUNT(1) FROM Users WHERE Username = @Username AND PasswordHash = HASHBYTES('SHA2_256', @Password)";
                     using (var command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Username", username);
