@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Aplikacja_Bankowa.Services;
@@ -13,21 +14,25 @@ namespace Aplikacja_Bankowa
     public class Bankomat 
     {
         private decimal balance;
+        private Accounts account;
         private readonly DatabaseConnection dbConnection;
 
         public Bankomat(decimal initialBalance, DatabaseConnection dbConnection)
         {
-            this.balance = initialBalance;
             this.dbConnection = dbConnection;
+            account = new Accounts(this.dbConnection);
         }
  
         public decimal GetBalance()
         {
+
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
             return balance;
         }
 
         public void Deposit(decimal amount)
         {
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
             if (amount > 0)
             {
 
@@ -35,7 +40,7 @@ namespace Aplikacja_Bankowa
                     " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
                     "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
                     " VALUES( " +
-                    "@Amount," +
+                    "@AmountValue," +
                         "'Bankomat wpłata'," +
                         "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin'),"+
                         "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wpłata_gotówki')" +
@@ -45,8 +50,8 @@ namespace Aplikacja_Bankowa
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Amount", amount);
-
+                        command.Parameters.AddWithValue("@Amount", this.balance + amount);
+                        command.Parameters.AddWithValue("@AmountValue", amount);
                         try
                         {
                             connection.Open();
@@ -65,8 +70,8 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
+                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
 
-      
                 Console.WriteLine($"Deposited: {amount:C}. New balance: {balance:C}");
             }
             else
@@ -77,13 +82,14 @@ namespace Aplikacja_Bankowa
 
         public void Withdraw(decimal amount)
         {
-            //if (amount > 0 && amount <= balance)
-            //{
-                string query = "UPDATE Accounts SET AccountBalance = @Amount" +
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+            if (amount > 0 && amount <= balance)
+            {
+            string query = "UPDATE Accounts SET AccountBalance = @Amount" +
                 " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
                 "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
                 " VALUES( " +
-                "@Amount * -1," +
+                "@AmountValue * -1," +
                     "'Wypłata wpłata'," +
                     "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin')," +
                     "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wypłata_gotówki')" +
@@ -93,8 +99,8 @@ namespace Aplikacja_Bankowa
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Amount", amount);
-                 
+                        command.Parameters.AddWithValue("@Amount", this.balance - amount);
+                        command.Parameters.AddWithValue("@AmountValue", amount);
                         try
                         {
                             connection.Open();
@@ -113,13 +119,14 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
+                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
 
                 Console.WriteLine($"Withdrawn: {amount:C}. New balance: {balance:C}");
-           // }
-           // else
-          //  {
-           //     Console.WriteLine("Insufficient funds or invalid amount.");
-           // }
+            }
+            else
+            {
+                Console.WriteLine("Insufficient funds or invalid amount.");
+            }
         }
     }
 }
