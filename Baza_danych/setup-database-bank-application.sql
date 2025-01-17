@@ -58,11 +58,73 @@ CREATE TABLE Accounts (
     AccountID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,					-- Automatyczny UUID
     AccountName NVARCHAR(100) NOT NULL,										-- Nazwa konta
     AccountType NVARCHAR(50) NOT NULL,										-- Typ konta (np. oszczêdnoœciowe, bie¿¹ce)
-    AccountNumber NVARCHAR(20) NOT NULL UNIQUE,								-- Unikalny numer konta
+    AccountNumber INT NOT NULL UNIQUE,								-- Unikalny numer konta
     UserID UNIQUEIDENTIFIER NOT NULL,										-- Powi¹zanie z u¿ytkownikiem (klucz obcy)
-    AccountBalance BIGINT DEFAULT 0 NOT NULL, 								-- Saldo konta
+    AccountBalance REAL DEFAULT 0 NOT NULL, 								-- Saldo konta
     Currency NVARCHAR(3) DEFAULT 'PLN' NOT NULL,											-- Waluta konta (np. PLN, USD)
     FOREIGN KEY (UserID) REFERENCES Users(UserID)							-- Klucz obcy do tabeli Users
+);
+GO
+
+INSERT INTO Accounts (
+AccountName,
+AccountType,
+AccountNumber,
+UserID,
+AccountBalance
+)
+VALUES (
+    'Direct admin',
+    'normal',											
+	9999,
+	(SELECT UserID FROM Users WHERE Username = 'admin'),  --admin
+	999999
+);
+GO
+INSERT INTO Accounts (
+AccountName,
+AccountType,
+AccountNumber,
+UserID,
+AccountBalance
+)
+VALUES (
+    'Direct user1',
+    'normal',											
+	1111,
+	(SELECT UserID FROM Users WHERE Username = 'user1'), -- user1
+	0
+);
+GO
+
+INSERT INTO Accounts (
+AccountName,
+AccountType,
+AccountNumber,
+UserID,
+AccountBalance
+)
+VALUES (
+    'Direct user2',
+    'normal',									
+	2222,
+	(SELECT UserID FROM Users WHERE Username = 'user2'), -- user2
+	0
+);
+GO
+INSERT INTO Accounts (
+AccountName,
+AccountType,
+AccountNumber,
+UserID,
+AccountBalance
+)
+VALUES (
+    'Direct user3',
+    'normal',											
+	'3333',
+	(SELECT UserID FROM Users WHERE Username = 'user3'), -- user3
+	0
 );
 GO
 
@@ -81,7 +143,7 @@ GO
 
 CREATE TABLE Transfers (
     TransferID UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,				-- Automatyczny UUID
-    Amount BIGINT NOT NULL,													-- Kwota transferu
+    Amount REAL NOT NULL,													-- Kwota transferu
     TransferTitle NVARCHAR(255) NOT NULL,									-- Tytu³ przelewu
     SenderAccountID UNIQUEIDENTIFIER NULL,								-- UUID konta nadawcy
     RecipientAccountID UNIQUEIDENTIFIER NULL,							-- UUID konta odbiorcy

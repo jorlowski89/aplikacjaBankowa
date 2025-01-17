@@ -42,5 +42,7 @@
 
 - Instalacja sqlexpress 2022 [download](https://www.microsoft.com/en-us/sql-server/sql-server-downloads?msockid=2099d0b1a47466a23918c5f7a55667d1)
 - Zainstaluj SSMS [download](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
-- Uruchom SSMS i połącz z serwerem SQL
+- Uruchom SSMS i połącz z serwerem SQL `.\SQLEXPRESS`
 - Otwórz i uruchom kwerendy z pliku setup-database-bank-application.sql w SSMS
+- aktualizacja bazy uruchom kwerendy z pliku delete-database-bank-application.sql w SSMS
+- ponownie uruchom kwerendy z pliku setup-database-bank-application.sql w SSMS
