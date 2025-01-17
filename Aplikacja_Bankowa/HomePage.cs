@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace Aplikacja_Bankowa
     {
         private Bankomat bankomat;
         private readonly DatabaseConnection dbConnection;
+        private Accounts account;
 
         public HomePage(DatabaseConnection dbConnection)
         {
@@ -24,7 +26,8 @@ namespace Aplikacja_Bankowa
 
             // Przypisanie przekazanego połączenia do pola klasy
             this.dbConnection = dbConnection;
-            bankomat = new Bankomat(10);
+            bankomat = new Bankomat(0);
+            account = new Accounts(dbConnection);
             UpdateBalanceLabel();
         }
 
@@ -34,7 +37,7 @@ namespace Aplikacja_Bankowa
         }
         private void UpdateBalanceLabel()
         {
-            saldoKonta.Text = $"{bankomat.GetBalance():C}";
+            saldoKonta.Text = $"{account.GetAccountBalance("6E3E8B29-593F-4466-8214-AD6474374013"):C}";
         }
 
 

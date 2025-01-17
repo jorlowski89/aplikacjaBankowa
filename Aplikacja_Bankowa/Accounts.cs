@@ -14,30 +14,45 @@ namespace Aplikacja_Bankowa
 {
     public class Accounts
     {
-        private int accNumber;
-        private readonly DatabaseConnection dbConnection = new DatabaseConnection();
-        private Accounts(int accNumber) 
+
+        private readonly DatabaseConnection dbConnection;
+
+        public Accounts(DatabaseConnection dbConnection)
         {
-            this.accNumber = accNumber;
+            this.dbConnection = dbConnection;
         }
 
-        public int GetBalance()
+        public decimal GetAccountBalance(string accountId)
         {
+            decimal balance = 0;
+
+            string query = "SELECT AccountBalance FROM Accounts WHERE AccountID = @AccountID";
+
             using (var connection = dbConnection.GetConnection())
-            try
             {
-                connection.Open();
-                var query = $"SELECT AccountBalance FROM Accounts WHERE AccountNumber = '{this.accNumber}'";
-                using (var command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                       return command.ExecuteNonQuery();
+                    command.Parameters.AddWithValue("@AccountID", accountId);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            balance = Convert.ToDecimal(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Wystąpił błąd: {ex.Message}");
+                        throw; // Możesz wywołać wyjątek lub zalogować błąd
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Błąd podczas logowania: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 0;
-            }
+
+            return balance;
         }
     }
 }
