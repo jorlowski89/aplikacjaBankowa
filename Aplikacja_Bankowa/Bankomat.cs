@@ -17,7 +17,7 @@ namespace Aplikacja_Bankowa
         private Accounts account;
         private readonly DatabaseConnection dbConnection;
 
-        public Bankomat(decimal initialBalance, DatabaseConnection dbConnection)
+        public Bankomat(DatabaseConnection dbConnection)
         {
             this.dbConnection = dbConnection;
             account = new Accounts(this.dbConnection);

@@ -23,7 +23,7 @@ namespace Aplikacja_Bankowa
             InitializeComponent();
             this.dbConnection = dbConnection;
             this.Text = "Bankomat";
-            bankomat = new Bankomat(0, dbConnection);
+            bankomat = new Bankomat(dbConnection);
             UpdateBalanceLabel();
         }
 
