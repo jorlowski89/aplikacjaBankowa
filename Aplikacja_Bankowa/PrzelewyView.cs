@@ -14,6 +14,7 @@ namespace Aplikacja_Bankowa
     public partial class PrzelewyView : Form
     {
         private readonly DatabaseConnection dbConnection;
+        private Przelewy Przelew;
         public PrzelewyView(DatabaseConnection dbConnection)
         {
             InitializeComponent();
@@ -177,14 +178,58 @@ namespace Aplikacja_Bankowa
         private void wykonajPrzelew_Click(object sender, EventArgs e)
         {
             HomePage homePage = new HomePage(dbConnection);
+
+            if (string.IsNullOrWhiteSpace(kwotaPrzelewuValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Kwota przelewu'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                kwotaPrzelewuValue.Focus();
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(tytulPrzelewuValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Tytul przelewu'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                tytulPrzelewuValue.Focus();
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(numerKontaValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Numer konta'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                numerKontaValue.Focus();
+                return;
+            }
+
+
+            Przelew = new Przelewy(int.Parse(kwotaPrzelewuValue.Text), tytulPrzelewuValue.Text, 1, int.Parse(numerKontaValue.Text), 3, dbConnection);
+            Przelew.WykonajPrzelew();
+
+            MessageBox.Show("Wykonano przelew'!",
+                              "Wykonano",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Information);
+
             homePage.Show();
             this.Hide();
         }
 
         private void anulujPrzelew_Click(object sender, EventArgs e)
         {
+
             HomePage homePage = new HomePage(dbConnection);
             homePage.Show();
+
             this.Hide();
         }
     }
