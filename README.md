@@ -47,3 +47,5 @@
 - Otwórz i uruchom kwerendy z pliku setup-database-bank-application.sql w SSMS
 - aktualizacja bazy uruchom kwerendy z pliku delete-database-bank-application.sql w SSMS
 - ponownie uruchom kwerendy z pliku setup-database-bank-application.sql w SSMS
+
+![Diagram bazy danych](diagram.png "Diagram bazy danych")
