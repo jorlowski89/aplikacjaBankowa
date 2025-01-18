@@ -32,5 +32,6 @@
         private System.Windows.Forms.TextBox tytulPrzelewuValue;
         private System.Windows.Forms.Button wykonajPrzelew;
         private System.Windows.Forms.Button anulujPrzelew;
+        private System.Windows.Forms.Button przelewZagraniczny;
     }
 }

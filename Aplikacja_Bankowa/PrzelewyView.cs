@@ -38,6 +38,7 @@ namespace Aplikacja_Bankowa
             this.tytulPrzelewuValue = new System.Windows.Forms.TextBox();
             this.wykonajPrzelew = new System.Windows.Forms.Button();
             this.anulujPrzelew = new System.Windows.Forms.Button();
+            this.przelewZagraniczny = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // stanKontaLabel
@@ -143,9 +144,20 @@ namespace Aplikacja_Bankowa
             this.anulujPrzelew.UseVisualStyleBackColor = true;
             this.anulujPrzelew.Click += new System.EventHandler(this.anulujPrzelew_Click);
             // 
-            // Przelewy
+            // przelewZagraniczny
+            // 
+            this.przelewZagraniczny.Location = new System.Drawing.Point(194, 369);
+            this.przelewZagraniczny.Name = "przelewZagraniczny";
+            this.przelewZagraniczny.Size = new System.Drawing.Size(137, 43);
+            this.przelewZagraniczny.TabIndex = 12;
+            this.przelewZagraniczny.Text = "Wykonaj przelew zagraniczny";
+            this.przelewZagraniczny.UseVisualStyleBackColor = true;
+            this.przelewZagraniczny.Click += new System.EventHandler(this.przelewZagraniczny_Click);
+            // 
+            // PrzelewyView
             // 
             this.ClientSize = new System.Drawing.Size(535, 446);
+            this.Controls.Add(this.przelewZagraniczny);
             this.Controls.Add(this.anulujPrzelew);
             this.Controls.Add(this.wykonajPrzelew);
             this.Controls.Add(this.tytulPrzelewuLabel);
@@ -158,7 +170,7 @@ namespace Aplikacja_Bankowa
             this.Controls.Add(this.kwotaPrzelewuValue);
             this.Controls.Add(this.stanKontaValue);
             this.Controls.Add(this.stanKontaLabel);
-            this.Name = "Przelewy";
+            this.Name = "PrzelewyView";
             this.Load += new System.EventHandler(this.Przelewy_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -230,6 +242,55 @@ namespace Aplikacja_Bankowa
             HomePage homePage = new HomePage(dbConnection);
             homePage.Show();
 
+            this.Hide();
+        }
+
+        private void przelewZagraniczny_Click(object sender, EventArgs e)
+        {
+            HomePage homePage = new HomePage(dbConnection);
+
+            if (string.IsNullOrWhiteSpace(kwotaPrzelewuValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Kwota przelewu'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                kwotaPrzelewuValue.Focus();
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(tytulPrzelewuValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Tytul przelewu'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                tytulPrzelewuValue.Focus();
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(numerKontaValue.Text))
+            {
+                MessageBox.Show("Proszę uzupełnić pole 'Numer konta'!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                numerKontaValue.Focus();
+                return;
+            }
+
+
+            Przelew = new PrzelewyZagraniczne(int.Parse(kwotaPrzelewuValue.Text), tytulPrzelewuValue.Text, 1, int.Parse(numerKontaValue.Text), 3, dbConnection, "USA", 4);
+            Przelew.WykonajPrzelew();
+
+            MessageBox.Show("Wykonano przelew zagraniczny'!",
+                              "Wykonano",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Information);
+
+            homePage.Show();
             this.Hide();
         }
     }
