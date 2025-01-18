@@ -26,7 +26,7 @@ namespace Aplikacja_Bankowa
 
             // Przypisanie przekazanego połączenia do pola klasy
             this.dbConnection = dbConnection;
-            bankomat = new Bankomat(0);
+            bankomat = new Bankomat(dbConnection);
             account = new Accounts(dbConnection);
             UpdateBalanceLabel();
         }

@@ -1,30 +1,77 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using Aplikacja_Bankowa.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Aplikacja_Bankowa
 {
-    public class Bankomat
+    public class Bankomat 
     {
         private decimal balance;
+        private Accounts account;
+        private readonly DatabaseConnection dbConnection;
 
-        public Bankomat(decimal initialBalance)
+        public Bankomat(DatabaseConnection dbConnection)
         {
-            this.balance = initialBalance;
+            this.dbConnection = dbConnection;
+            account = new Accounts(this.dbConnection);
         }
  
         public decimal GetBalance()
         {
+
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
             return balance;
         }
 
         public void Deposit(decimal amount)
         {
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
             if (amount > 0)
             {
-                balance += amount;
+
+                string query = "UPDATE Accounts SET AccountBalance = @Amount" +
+                    " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
+                    "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
+                    " VALUES( " +
+                    "@AmountValue," +
+                        "'Bankomat wpłata'," +
+                        "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin'),"+
+                        "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wpłata_gotówki')" +
+                    " )";
+
+                using (var connection = dbConnection.GetConnection())
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Amount", this.balance + amount);
+                        command.Parameters.AddWithValue("@AmountValue", amount);
+                        try
+                        {
+                            connection.Open();
+                            object result = command.ExecuteScalar();
+
+                            if (result != null && result != DBNull.Value)
+                            {
+                                balance = Convert.ToDecimal(result);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Wystąpił błąd: {ex.Message}");
+                            throw; // Możesz wywołać wyjątek lub zalogować błąd
+                        }
+                    }
+                }
+
+                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+
                 Console.WriteLine($"Deposited: {amount:C}. New balance: {balance:C}");
             }
             else
@@ -35,9 +82,45 @@ namespace Aplikacja_Bankowa
 
         public void Withdraw(decimal amount)
         {
+            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
             if (amount > 0 && amount <= balance)
             {
-                balance -= amount;
+            string query = "UPDATE Accounts SET AccountBalance = @Amount" +
+                " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
+                "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
+                " VALUES( " +
+                "@AmountValue * -1," +
+                    "'Wypłata wpłata'," +
+                    "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin')," +
+                    "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wypłata_gotówki')" +
+                " )";
+
+                using (var connection = dbConnection.GetConnection())
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Amount", this.balance - amount);
+                        command.Parameters.AddWithValue("@AmountValue", amount);
+                        try
+                        {
+                            connection.Open();
+                            object result = command.ExecuteScalar();
+
+                            if (result != null && result != DBNull.Value)
+                            {
+                                balance = Convert.ToDecimal(result);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Wystąpił błąd: {ex.Message}");
+                            throw; // Możesz wywołać wyjątek lub zalogować błąd
+                        }
+                    }
+                }
+
+                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+
                 Console.WriteLine($"Withdrawn: {amount:C}. New balance: {balance:C}");
             }
             else
