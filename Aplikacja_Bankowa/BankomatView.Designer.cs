@@ -51,9 +51,15 @@
             // 
             this.kwotaValue.DecimalPlaces = 2;
             this.kwotaValue.Location = new System.Drawing.Point(71, 69);
+            this.kwotaValue.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.kwotaValue.Name = "kwotaValue";
             this.kwotaValue.Size = new System.Drawing.Size(120, 20);
             this.kwotaValue.TabIndex = 1;
+            this.kwotaValue.ValueChanged += new System.EventHandler(this.kwotaValue_ValueChanged);
             // 
             // saldoLabel
             // 
@@ -117,6 +123,7 @@
             this.Controls.Add(this.kwotaLabel);
             this.Name = "BankomatView";
             this.Text = "BankomatView";
+            this.Load += new System.EventHandler(this.BankomatView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.kwotaValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

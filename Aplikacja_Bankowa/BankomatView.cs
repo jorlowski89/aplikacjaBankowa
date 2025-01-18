@@ -64,5 +64,15 @@ namespace Aplikacja_Bankowa
             homePage.Show();
             this.Hide();
         }
+
+        private void BankomatView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kwotaValue_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
