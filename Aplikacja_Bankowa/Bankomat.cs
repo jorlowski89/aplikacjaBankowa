@@ -26,13 +26,13 @@ namespace Aplikacja_Bankowa
         public decimal GetBalance()
         {
 
-            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+            this.balance = account.GetAccountBalance(1);
             return balance;
         }
 
         public void Deposit(decimal amount)
         {
-            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+            this.balance = account.GetAccountBalance(1);
             if (amount > 0)
             {
 
@@ -70,7 +70,7 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
-                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+                this.balance = account.GetAccountBalance(1);
 
                 Console.WriteLine($"Deposited: {amount:C}. New balance: {balance:C}");
             }
@@ -82,7 +82,7 @@ namespace Aplikacja_Bankowa
 
         public void Withdraw(decimal amount)
         {
-            this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+            this.balance = account.GetAccountBalance(1);
             if (amount > 0 && amount <= balance)
             {
             string query = "UPDATE Accounts SET AccountBalance = @Amount" +
@@ -119,7 +119,7 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
-                this.balance = account.GetAccountBalance("DA803E82-283F-490D-9D27-48416759D75D");
+                this.balance = account.GetAccountBalance(1);
 
                 Console.WriteLine($"Withdrawn: {amount:C}. New balance: {balance:C}");
             }

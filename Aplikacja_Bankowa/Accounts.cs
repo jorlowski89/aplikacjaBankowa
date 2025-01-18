@@ -22,7 +22,7 @@ namespace Aplikacja_Bankowa
             this.dbConnection = dbConnection;
         }
 
-        public decimal GetAccountBalance(string accountId)
+        public decimal GetAccountBalance(int accountId)
         {
             decimal balance = 0;
 

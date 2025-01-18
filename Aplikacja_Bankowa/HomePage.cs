@@ -37,7 +37,7 @@ namespace Aplikacja_Bankowa
         }
         private void UpdateBalanceLabel()
         {
-            saldoKonta.Text = $"{account.GetAccountBalance("798501DA-12FC-4BC4-83B5-0BBAF298B244"):C}";
+            saldoKonta.Text = $"{account.GetAccountBalance(1):C}";
         }
 
 
