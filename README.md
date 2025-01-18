@@ -6,32 +6,33 @@
 
 ## Funkcjonalności:
 - Logowanie (użytkownik, hasło)
-- Zakładanie nowego użytkownika
+- ~~Zakładanie nowego użytkownika~~
 - Przelew zwykły
-- Walidacja przelewów powyżej 15 tys Euro
-- Historia przelewów
+- ~~Walidacja przelewów powyżej 15 tys Euro~~
+- ~~Historia przelewów~~
 - Wpłata/wypłata z bankomatu
 
 ## Baza (Tabele):
-- 'users': uuid, login, password, user_type(admin/user), is_active, create_date
-- 'accounts': uuid, account_name, account_type, account_number, user_uuid, account_balance, currency
-- 'transfers': uuid, amount, transfer_title, sender_account_uuid, recipient_account_uuid, sending_date, posting_date, transfer_type
-- 'transfer_types': uuid, transfer_type (Wpłata_gotówki, wypłata_gotówki, przelewy_krajowy)
+- 'users': id, login, password, user_type(admin/user), is_active, create_date
+- 'accounts': id, account_name, account_type, account_number, user_id, account_balance, currency
+- 'transfers': id, amount, transfer_title, sender_account_id, recipient_account_id, sending_date, posting_date, transfer_type
+- 'transfer_types': id, transfer_type (Wpłata_gotówki, wypłata_gotówki, przelewy_krajowy)
+- 'LoggedInUsers': Username, IsLoggedIn, LoggedAt
 
 ## Widoki użytkownika:
 - okno logowania
-- rejestracja
+- ~~rejestracja~~
 - strona domowa (po zalogowaniu): przywitanie, saldo, ostatnie przelewy, wykonaj przelew, otwórz historię
-- historia
+- ~~historia~~
 - przelewy
 - bankomat
 
 ## Widoki admina:
 - okno logowania
-- strona domowa: walidacja przelewów, użytkownicy
-- lista użytkowników (widok admina)
-- lista przelewów do zatwierdzenia
-- walidacja nowych użytkowników
+- ~~strona domowa: walidacja przelewów, użytkownicy~~
+- ~~lista użytkowników (widok admina)~~
+- ~~lista przelewów do zatwierdzenia~~
+- ~~walidacja nowych użytkowników~~
 
 ## Technologie:
 - C#
