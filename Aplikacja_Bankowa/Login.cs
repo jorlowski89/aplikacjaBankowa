@@ -143,4 +143,36 @@ namespace Aplikacja_Bankowa
             }
         }
     }
+
+    public class UserManager
+    {
+        private string userName;
+
+        public void SetUsername(string username)
+        {
+            userName = username;
+        }
+
+        public string GetLastLoggedInUser(DatabaseConnection dbConnection)
+        {
+            using (var connection = dbConnection.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT TOP 1 Username FROM LoggedInUsers ORDER BY LoggedAt DESC";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteScalar();
+                        return result != null ? result.ToString() : "Brak ostatnio zalogowanego użytkownika.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Błąd podczas pobierania ostatniego zalogowanego użytkownika: {ex.Message}");
+                    return "Błąd podczas pobierania użytkownika.";
+                }
+            }
+        }
+    }
 }

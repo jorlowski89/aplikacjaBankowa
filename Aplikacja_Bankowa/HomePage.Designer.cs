@@ -37,7 +37,7 @@
             // userName
             // 
             this.userName.AutoSize = true;
-            this.userName.Location = new System.Drawing.Point(559, 19);
+            this.userName.Location = new System.Drawing.Point(41, 19);
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(29, 13);
             this.userName.TabIndex = 0;
