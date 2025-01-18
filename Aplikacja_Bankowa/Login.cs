@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Aplikacja_Bankowa.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Aplikacja_Bankowa
 {
@@ -139,6 +140,68 @@ namespace Aplikacja_Bankowa
                 {
                     // Obsługa błędu przy zapisie do bazy
                     MessageBox.Show($"Błąd podczas logowania użytkownika w bazie danych: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+    }
+
+    public class UserManager
+    {
+        private readonly DatabaseConnection dbConnection;
+        private string userName;
+        private int userID;
+
+        public UserManager(DatabaseConnection dbConnection)
+        {
+            this.dbConnection = dbConnection;
+        }
+
+        public void SetUsername(string username)
+        {
+            userName = username;
+        }
+
+        public string GetLastLoggedInUser()
+        {
+            using (var connection = this.dbConnection.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT TOP 1 Username FROM LoggedInUsers ORDER BY LoggedAt DESC";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteScalar();
+                        return result != null ? result.ToString() : "Brak ostatnio zalogowanego użytkownika.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Błąd podczas pobierania ostatniego zalogowanego użytkownika: {ex.Message}");
+                    return "Błąd podczas pobierania użytkownika.";
+                }
+            }
+        }
+
+        public int GetUserIDByName(string username)
+        {
+            using (var connection = this.dbConnection.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT TOP 1 UserID FROM Users where Username = @Username";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", username);
+                        var result = command.ExecuteScalar();
+                        return result != null && int.TryParse(result.ToString(), out int userID) ? userID : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Błąd podczas pobierania ostatniego zalogowanego użytkownika: {ex.Message}");
+                    return 0;
                 }
             }
         }

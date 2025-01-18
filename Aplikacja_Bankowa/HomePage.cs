@@ -17,6 +17,7 @@ namespace Aplikacja_Bankowa
         private Bankomat bankomat;
         private readonly DatabaseConnection dbConnection;
         private Accounts account;
+        private UserManager user;
 
         public HomePage(DatabaseConnection dbConnection)
         {
@@ -28,6 +29,7 @@ namespace Aplikacja_Bankowa
             this.dbConnection = dbConnection;
             bankomat = new Bankomat(dbConnection);
             account = new Accounts(dbConnection);
+            user = new UserManager(dbConnection);
             UpdateBalanceLabel();
         }
 
@@ -37,7 +39,8 @@ namespace Aplikacja_Bankowa
         }
         private void UpdateBalanceLabel()
         {
-            saldoKonta.Text = $"{account.GetAccountBalance(1):C}";
+            saldoKonta.Text = $"{account.GetAccountBalance(user.GetUserIDByName(user.GetLastLoggedInUser())):C}";
+            userName.Text = $"Zalogowano jako: {user.GetLastLoggedInUser():C}";
         }
 
 

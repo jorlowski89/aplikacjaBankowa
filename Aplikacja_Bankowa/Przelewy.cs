@@ -37,6 +37,4 @@ namespace Aplikacja_Bankowa
         }
 
     }
-
-
 }

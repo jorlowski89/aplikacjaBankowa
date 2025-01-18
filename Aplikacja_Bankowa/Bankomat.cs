@@ -16,33 +16,39 @@ namespace Aplikacja_Bankowa
         private decimal balance;
         private Accounts account;
         private readonly DatabaseConnection dbConnection;
+        private UserManager user;
+        private int userId;
+        private string userName;
 
         public Bankomat(DatabaseConnection dbConnection)
         {
             this.dbConnection = dbConnection;
             account = new Accounts(this.dbConnection);
+            user = new UserManager(this.dbConnection);
+            userId = user.GetUserIDByName(user.GetLastLoggedInUser());
+            userName = user.GetLastLoggedInUser();
         }
  
         public decimal GetBalance()
         {
 
-            this.balance = account.GetAccountBalance(1);
+            this.balance = account.GetAccountBalance(this.userId);
             return balance;
         }
 
         public void Deposit(decimal amount)
         {
-            this.balance = account.GetAccountBalance(1);
+            this.balance = account.GetAccountBalance(this.userId);
             if (amount > 0)
             {
 
                 string query = "UPDATE Accounts SET AccountBalance = @Amount" +
-                    " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
+                    " WHERE UserID = (SELECT UserID FROM Users WHERE Username = @userName)" +
                     "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
                     " VALUES( " +
                     "@AmountValue," +
                         "'Bankomat wpłata'," +
-                        "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin'),"+
+                        "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = @userName)," +
                         "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wpłata_gotówki')" +
                     " )";
 
@@ -52,6 +58,7 @@ namespace Aplikacja_Bankowa
                     {
                         command.Parameters.AddWithValue("@Amount", this.balance + amount);
                         command.Parameters.AddWithValue("@AmountValue", amount);
+                        command.Parameters.AddWithValue("@userName", this.userName);
                         try
                         {
                             connection.Open();
@@ -70,7 +77,7 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
-                this.balance = account.GetAccountBalance(1);
+                this.balance = account.GetAccountBalance(this.userId);
 
                 Console.WriteLine($"Deposited: {amount:C}. New balance: {balance:C}");
             }
@@ -82,16 +89,16 @@ namespace Aplikacja_Bankowa
 
         public void Withdraw(decimal amount)
         {
-            this.balance = account.GetAccountBalance(1);
+            this.balance = account.GetAccountBalance(this.userId);
             if (amount > 0 && amount <= balance)
             {
             string query = "UPDATE Accounts SET AccountBalance = @Amount" +
-                " WHERE UserID = (SELECT UserID FROM Users WHERE Username = 'admin')" +
+                " WHERE UserID = (SELECT UserID FROM Users WHERE Username = @userName)" +
                 "INSERT INTO Transfers(Amount, TransferTitle, RecipientAccountID, TransferTypeID)" +
                 " VALUES( " +
                 "@AmountValue * -1," +
                     "'Wypłata wpłata'," +
-                    "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = 'admin')," +
+                    "(SELECT AccountID FROM Users JOIN Accounts ON Users.UserID = Accounts.UserID WHERE Users.Username = @userName)," +
                     "(SELECT TransferTypeID FROM TransferTypes WHERE TransferType = 'Wypłata_gotówki')" +
                 " )";
 
@@ -101,6 +108,7 @@ namespace Aplikacja_Bankowa
                     {
                         command.Parameters.AddWithValue("@Amount", this.balance - amount);
                         command.Parameters.AddWithValue("@AmountValue", amount);
+                        command.Parameters.AddWithValue("@userName", this.userName);
                         try
                         {
                             connection.Open();
@@ -119,7 +127,7 @@ namespace Aplikacja_Bankowa
                     }
                 }
 
-                this.balance = account.GetAccountBalance(1);
+                this.balance = account.GetAccountBalance(this.userId);
 
                 Console.WriteLine($"Withdrawn: {amount:C}. New balance: {balance:C}");
             }
