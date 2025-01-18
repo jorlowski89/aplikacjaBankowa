@@ -15,6 +15,7 @@ namespace Aplikacja_Bankowa
     {
         private readonly DatabaseConnection dbConnection;
         private Przelewy Przelew;
+        private Bankomat bankomat;
         public PrzelewyView(DatabaseConnection dbConnection)
         {
             InitializeComponent();
@@ -22,6 +23,13 @@ namespace Aplikacja_Bankowa
 
             // Przypisanie przekazanego połączenia do pola klasy
             this.dbConnection = dbConnection;
+            this.bankomat = new Bankomat(dbConnection);
+            UpdateBalanceLabel();
+        }
+
+        private void UpdateBalanceLabel()
+        {
+            stanKontaValue.Text = $"{bankomat.GetBalance():C}";
         }
 
         private void InitializeComponent()
@@ -189,7 +197,6 @@ namespace Aplikacja_Bankowa
 
         private void wykonajPrzelew_Click(object sender, EventArgs e)
         {
-            HomePage homePage = new HomePage(dbConnection);
 
             if (string.IsNullOrWhiteSpace(kwotaPrzelewuValue.Text))
             {
@@ -231,7 +238,8 @@ namespace Aplikacja_Bankowa
                               "Wykonano",
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Information);
-
+            UpdateBalanceLabel();
+            HomePage homePage = new HomePage(dbConnection);
             homePage.Show();
             this.Hide();
         }
@@ -247,7 +255,6 @@ namespace Aplikacja_Bankowa
 
         private void przelewZagraniczny_Click(object sender, EventArgs e)
         {
-            HomePage homePage = new HomePage(dbConnection);
 
             if (string.IsNullOrWhiteSpace(kwotaPrzelewuValue.Text))
             {
@@ -289,7 +296,8 @@ namespace Aplikacja_Bankowa
                               "Wykonano",
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Information);
-
+            UpdateBalanceLabel();
+            HomePage homePage = new HomePage(dbConnection);
             homePage.Show();
             this.Hide();
         }
