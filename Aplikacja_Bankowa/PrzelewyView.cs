@@ -230,6 +230,16 @@ namespace Aplikacja_Bankowa
                 return;
             }
 
+            if (int.Parse(kwotaPrzelewuValue.Text) > bankomat.GetBalance())
+            {
+                MessageBox.Show("Nie masz wystarczającej ilości pieniędzy!",
+                                "Błąd",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                numerKontaValue.Focus();
+                return;
+            }
+
 
             Przelew = new Przelewy(int.Parse(kwotaPrzelewuValue.Text), tytulPrzelewuValue.Text, 1, int.Parse(numerKontaValue.Text), 3, dbConnection);
             Przelew.WykonajPrzelew();

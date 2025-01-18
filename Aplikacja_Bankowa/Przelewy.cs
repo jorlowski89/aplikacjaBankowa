@@ -44,7 +44,7 @@ namespace Aplikacja_Bankowa
             string username = user.GetLastLoggedInUser();
             int usernameID = user.GetUserIDByName(username);
 
-            if (balance > Amount )
+            if (balance >= Amount )
             {
                 string query = "UPDATE Accounts SET AccountBalance = (SELECT AccountBalance where UserID = @UserID) - @Amount" +
                     " WHERE UserID = @UserID" +
