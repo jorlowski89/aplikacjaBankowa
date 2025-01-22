@@ -1,9 +1,5 @@
 # Aplikacja Bankowa
 
-- Widoki - Jakub
-- BE - Mateusz
-- Baza - Albert
-
 ## Funkcjonalności:
 - Logowanie (użytkownik, hasło)
 - ~~Zakładanie nowego użytkownika~~
